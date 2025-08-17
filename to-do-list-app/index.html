@@ -52,6 +52,10 @@
 <script>
     function addTask() {
         let taskName = document.getElementById('taskInput').value.trim();
+        if (taskName === ""){
+            alert("You need to enter a task name");
+            return;
+        }
         
         // Create the list item (li)
         let listItem = document.createElement("li");
@@ -62,21 +66,18 @@
         // Set the text content of the span
         taskTextSpan.textContent = taskName;
 
-        // Create Edit button
-        let editBtn = document.createElement("button")
-        editBtn.textcontent = "Edit";
-        editBtn.onclick = function (){
-            editTask(taskTextSpan)  // needs to be defined
-
-        // Create Delete button
-        let deleteBtn = document.createElement("button")
-        deleteBtn.textContent = "Delete"
-        deleteBtn.onclick = function (){
-            removeTask() // needs to be defined
-        }
-
         // Append the span to the list item
         listItem.appendChild(taskTextSpan);
+
+        // Create Edit button
+        const editBtn = createEditButton(taskTextSpan);
+        listItem.appendChild(editBtn);
+
+        // Create Delete button
+        const delBtn = createDeleteButton()
+        listItem.appendChild(delBtn);
+
+        
 
         // Get the ul element and append the new list item
         document.getElementById("todoList").appendChild(listItem);
@@ -85,6 +86,36 @@
         taskInput.value = "";
 
     }
+    function createEditButton (taskTextSpan){
+        let editBtn = document.createElement("button")
+        editBtn.textContent = "Edit";
+        editBtn.onclick = function (){
+            editTask(taskTextSpan);  // needs to be defined
+        }
+        return editBtn;
+    }
+    function createDeleteButton (){
+        let deleteBtn = document.createElement("button")
+        deleteBtn.textContent = "Delete"
+        deleteBtn.onclick = function (){
+            removeTask(); // needs to be defined
+        }
+        return deleteBtn;
+    }
+    function editTask(spanElement) { // Use 'spanElement' consistently as the parameter name
+    let newTaskValue = prompt("Edit your task:", spanElement.textContent); // Use spanElement here
+
+    if (newTaskValue !== null && newTaskValue.trim() !== "") {
+        spanElement.textContent = newTaskValue.trim(); // Use spanElement and newTaskValue
+    } else if (newTaskValue !== null && newTaskValue.trim() === "") {
+        alert("Task cannot be empty. Please enter some text.");
+    }
+}
+    function removeTask(){
+
+    }
+    
+
 </script>
 
 </body>
