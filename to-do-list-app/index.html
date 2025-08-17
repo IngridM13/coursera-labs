@@ -56,7 +56,6 @@
             alert("You need to enter a task name");
             return;
         }
-        
         // Create the list item (li)
         let listItem = document.createElement("li");
 
@@ -74,10 +73,9 @@
         listItem.appendChild(editBtn);
 
         // Create Delete button
-        const delBtn = createDeleteButton()
+        const delBtn = createDeleteButton(listItem)
         listItem.appendChild(delBtn);
 
-        
 
         // Get the ul element and append the new list item
         document.getElementById("todoList").appendChild(listItem);
@@ -90,28 +88,29 @@
         let editBtn = document.createElement("button")
         editBtn.textContent = "Edit";
         editBtn.onclick = function (){
-            editTask(taskTextSpan);  // needs to be defined
+            editTask(taskTextSpan);
         }
         return editBtn;
     }
-    function createDeleteButton (){
+    function createDeleteButton (listItem){
         let deleteBtn = document.createElement("button")
         deleteBtn.textContent = "Delete"
         deleteBtn.onclick = function (){
-            removeTask(); // needs to be defined
+            removeTask(listItem);
         }
         return deleteBtn;
     }
-    function editTask(spanElement) { // Use 'spanElement' consistently as the parameter name
-    let newTaskValue = prompt("Edit your task:", spanElement.textContent); // Use spanElement here
+    function editTask(spanElement) {
+        let newTaskValue = prompt("Edit your task:", spanElement.textContent);
 
-    if (newTaskValue !== null && newTaskValue.trim() !== "") {
-        spanElement.textContent = newTaskValue.trim(); // Use spanElement and newTaskValue
-    } else if (newTaskValue !== null && newTaskValue.trim() === "") {
-        alert("Task cannot be empty. Please enter some text.");
+        if (newTaskValue !== null && newTaskValue.trim() !== "") {
+            spanElement.textContent = newTaskValue.trim();
+        } else if (newTaskValue !== null && newTaskValue.trim() === "") {
+            alert("Task cannot be empty. Please enter some text.");
+        }
     }
-}
-    function removeTask(){
+    function removeTask(listItem){
+        listItem.remove();
 
     }
     
